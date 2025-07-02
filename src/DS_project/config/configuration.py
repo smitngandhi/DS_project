@@ -1,6 +1,6 @@
 from src.DS_project.constants import *
 from src.DS_project.utils.common import *
-from src.DS_project.entity.config_entity import (DataIngestionConfig)
+from src.DS_project.entity.config_entity import (DataIngestionConfig , DataValidationConfig)
 
 class ConfigurationManager:
     def __init__(self , 
@@ -25,3 +25,17 @@ class ConfigurationManager:
         )
 
         return data_ingestion
+    
+    def get_data_validation(self) -> DataValidationConfig:
+        config = self.config_path.data_validation
+        schema = self.schema_path.COLUMNS
+        create_directories([config.root_dir])
+
+        data_validation = DataValidationConfig(
+            root_dir = config.root_dir,
+            unzip_data_dir= config.unzip_data_dir,
+            STATUS_FILE=config.STATUS_FILE,
+            all_schema=schema
+        )
+
+        return data_validation
