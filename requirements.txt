@@ -13,3 +13,4 @@ python-box
 matplotlib
 notebook
 ipykernel
+python-dotenv
