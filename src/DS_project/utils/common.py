@@ -33,8 +33,8 @@ def create_directories(path_to_directories: list , verbose = True):
 @ensure_annotations
 def save_json(path: Path , data: dict):
 
-    with open(path) as f:
-        json.dump(data , f , indent=3)
+    with open(path , 'w') as f:
+        json.dump(data , f , indent=3)  
 
     logger.info(f"json file saved at {path}")
 

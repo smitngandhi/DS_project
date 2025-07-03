@@ -1,6 +1,7 @@
 from src.DS_project.constants import *
 from src.DS_project.utils.common import *
-from src.DS_project.entity.config_entity import (DataIngestionConfig , DataValidationConfig , DataTransformationConfig , ModelTrainingConfig)
+from src.DS_project.entity.config_entity import (DataIngestionConfig , DataValidationConfig , DataTransformationConfig , ModelTrainingConfig , ModelEvaluationConfig)
+
 
 class ConfigurationManager:
     def __init__(self , 
@@ -68,3 +69,21 @@ class ConfigurationManager:
         )
 
         return model_training
+    
+    def get_model_evaluation(self) -> ModelEvaluationConfig:
+        config = self.config_path.model_evaluation
+        create_directories([config.root_dir])
+        schema = self.schema_path.TARGET_COLUMN
+        params = self.params_path.ElasticNet
+
+        model_evaluation = ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            test_path=config.test_path,
+            model_path=config.model_path,
+            metrics_path=config.metrics_path,
+            all_params=params,
+            target_column=schema.name,
+            mlflow_uri="https://dagshub.com/smitngandhi/DS_project.mlflow"
+        )
+
+        return model_evaluation

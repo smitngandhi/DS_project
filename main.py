@@ -3,13 +3,14 @@ from src.DS_project.pipeline.data_ingestion_pipeline import DataIngestionTrainin
 from src.DS_project.pipeline.data_validation_pipeline import DataValidationTrainingPipeline
 from src.DS_project.pipeline.data_transformation_pipeline import DataTransformationTrainingPipeline
 from src.DS_project.pipeline.model_training_pipeline import ModelTrainingPipeline
-
+from src.DS_project.pipeline.model_evaluation_pipeline import ModelEvaluationPipeline
 
 
 STAGE_NAME_INGESTION = "Data_Ingestion_Pipeline"
 STAGE_NAME_VALIDATION = "Data_Validation_Pipeline"
 STAGE_NAME_TRANSFORMATION = "Data_Transformation_Pipeline"
 STAGE_NAME_TRAINING = "Model_Training_Pipeline"
+STAGE_NAME_EVALUATION = "Model_Evaluation_Pipeline"
 try:
     logger.info(f"{STAGE_NAME_INGESTION} started")
     data_ingestion = DataIngestionTrainingPipeline()
@@ -34,6 +35,12 @@ try:
     model_training = ModelTrainingPipeline()
     model_training.initiate_training()
     logger.info(f"{STAGE_NAME_TRAINING} completed")
+
+    logger.info("Starting Next Phase...")
+    logger.info(f"{STAGE_NAME_EVALUATION} started")
+    model_evaluation = ModelEvaluationPipeline()
+    model_evaluation.initiate_evaluation()
+    logger.info(f"{STAGE_NAME_EVALUATION} completed")
 
 
 
