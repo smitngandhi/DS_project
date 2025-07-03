@@ -1,6 +1,6 @@
 from src.DS_project.constants import *
 from src.DS_project.utils.common import *
-from src.DS_project.entity.config_entity import (DataIngestionConfig , DataValidationConfig)
+from src.DS_project.entity.config_entity import (DataIngestionConfig , DataValidationConfig , DataTransformationConfig , ModelTrainingConfig)
 
 class ConfigurationManager:
     def __init__(self , 
@@ -39,3 +39,32 @@ class ConfigurationManager:
         )
 
         return data_validation
+
+    def get_data_transformation(self) -> DataTransformationConfig:
+        config = self.config_path.data_transformation
+        create_directories([config.root_dir])
+
+        data_transformation = DataTransformationConfig(
+            root_dir= config.root_dir,
+            data_path= config.data_path
+        )
+
+        return data_transformation
+    
+    def get_model_training(self) -> ModelTrainingConfig:
+        config = self.config_path.model_training
+        create_directories([config.root_dir])
+        params = self.params_path.ElasticNet
+        schema = self.schema_path.TARGET_COLUMN
+
+        model_training = ModelTrainingConfig(
+            root_dir=config.root_dir,
+            train_path=config.train_path,
+            test_path=config.test_path,
+            model_name=config.model_name,
+            alpha=params.alpha,
+            l1_ratio=params.l1_ratio,
+            target_column=schema.name
+        )
+
+        return model_training
